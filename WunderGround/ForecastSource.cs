@@ -1,6 +1,7 @@
 ﻿namespace SpectreWeather.ForecastSource.WunderGround
 {
     using System;
+    using System.Globalization;
     using Newtonsoft.Json;
     using PublicModel;
 
@@ -18,7 +19,8 @@
                         relative_humidity = ""                    
                     }
                 };
-                var deserialized = JsonConvert.DeserializeAnonymousType(getJson(), schema);
+                var value = getJson();
+                var deserialized = JsonConvert.DeserializeAnonymousType(value, schema);
                 var main = deserialized.current_observation;
                 var humidity = main.relative_humidity;
                 return new Forecast(
@@ -43,6 +45,12 @@
             public Fahrenheit Temperature { get; }
             public long Humidity { get; }
             public string SourceId { get; }
+        }
+
+        public static Func<Coordinates, string> GetClient(Func<Uri, string> get, string wunderGroundKey)
+        {
+            return c => 
+                get(new Uri($"http://api.wunderground.com/api/{wunderGroundKey}/conditions/q/{c.Lat.ToString(CultureInfo.InvariantCulture)},{c.Lon.ToString(CultureInfo.InvariantCulture)}.json"));
         }
     }
 }

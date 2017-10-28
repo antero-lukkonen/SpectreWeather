@@ -20,6 +20,7 @@ namespace SpectreWeather.PublicModel.Spec.Fixtures
         public static long Humidity => Long;
 
         public static string SourceId => String;
+        public static Coordinates Coordinates => new Coordinates(Double, Double);
 
         private static long Next()
         {

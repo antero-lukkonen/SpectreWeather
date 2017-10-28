@@ -44,5 +44,12 @@
             public long Humidity { get; }
             public string SourceId { get; }
         }
+
+        public static Func<Coordinates, string> GetClient(Func<Uri, string> httpGet, string openWeatherMapKey)
+        {
+            return c =>
+                httpGet(new Uri(
+                    $"http://api.openweathermap.org/data/2.5/weather?lat={c.Lat}&lon={c.Lon}&APPID={openWeatherMapKey}"));
+        }
     }
 }
