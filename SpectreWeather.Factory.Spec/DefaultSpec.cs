@@ -8,7 +8,7 @@
     public class DefaultSpec
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Queries2WeatherSources()
         {
             var coordinatesForTallinn = new Coordinates(59.436962, 24.753574);
 

@@ -48,13 +48,13 @@
       <Project>{1abc07d7-e6ee-4d0d-97c9-916649b0ab5b}</Project>
       <Name>OpenWeatherMap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SpectreWeather.Api\SpectreWeather.Api.csproj">
+      <Project>{9F3CA658-8C7C-45DA-B3F4-DBD76410DDCB}</Project>
+      <Name>SpectreWeather.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpectreWeather.PublicModel\SpectreWeather.PublicModel.csproj">
       <Project>{f5e95ea9-09e6-4337-99e4-879be3922115}</Project>
       <Name>SpectreWeather.PublicModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Spectre\SpectreWeather.Api.csproj">
-      <Project>{9f3ca658-8c7c-45da-b3f4-dbd76410ddcb}</Project>
-      <Name>SpectreWeather.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\WunderGround\WunderGround.csproj">
       <Project>{4d6d17df-3516-4393-9e57-4566841c5807}</Project>

@@ -62,6 +62,22 @@ namespace SpectreWeather.ForecastSource.WunderGround.Spec
             {
                 Assert.AreEqual("http", uri.Scheme);               
             }, Unique.Coordinates, Unique.String);
+        }        
+
+        [TestMethod]
+        public void ReturnsTheResponseBody()
+        {
+            var expectedResult = Unique.String;
+
+            var httpGetMock = new Mock<Func<Uri, string>>();
+            
+            httpGetMock.Setup(f => f(It.IsAny<Uri>())).Returns(expectedResult);
+
+            var func = ForecastSource.GetClient(httpGetMock.Object, Unique.String);
+
+            var result = func(Unique.Coordinates);
+
+            Assert.AreEqual(expectedResult, result);
         }
 
         private static void VerifyUri(Action<Uri> assert, Coordinates coordinates, string apiKey)
@@ -79,22 +95,6 @@ namespace SpectreWeather.ForecastSource.WunderGround.Spec
             };
 
             httpGetMock.Verify(f => f(It.Is<Uri>(uri => AssertReturn(uri))));
-        }
-
-        [TestMethod]
-        public void ReturnsTheResponseBody()
-        {
-            var expectedResult = Unique.String;
-
-            var httpGetMock = new Mock<Func<Uri, string>>();
-            
-            httpGetMock.Setup(f => f(It.IsAny<Uri>())).Returns(expectedResult);
-
-            var func = ForecastSource.GetClient(httpGetMock.Object, Unique.String);
-
-            var result = func(Unique.Coordinates);
-
-            Assert.AreEqual(expectedResult, result);
         }
     }
 }

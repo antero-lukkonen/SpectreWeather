@@ -73,7 +73,7 @@
       <Project>{F5E95EA9-09E6-4337-99E4-879BE3922115}</Project>
       <Name>SpectreWeather.PublicModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Spectre\SpectreWeather.Api.csproj">
+    <ProjectReference Include="..\SpectreWeather.Api\SpectreWeather.Api.csproj">
       <Project>{9f3ca658-8c7c-45da-b3f4-dbd76410ddcb}</Project>
       <Name>SpectreWeather.Api</Name>
     </ProjectReference>
