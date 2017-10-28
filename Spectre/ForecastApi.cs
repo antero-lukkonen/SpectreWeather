@@ -21,7 +21,7 @@ namespace SpectreWeather.Api
             this.getForecast = getForecast;
         }
 
-        public IEnumerable<IForecast> Get()
+        public IEnumerable<IForecast> GetCurrentConditions()
         {
             var result = new List<IForecast>();
             foreach (var func in this.getForecast)

@@ -13,10 +13,6 @@
     [TestClass]
     public class ForecastApiSpec
     {
-        public ForecastApiSpec()
-        {
-        }
-
         [TestMethod]
         public void FiltersOutNullForecasts()
         {   
@@ -119,7 +115,7 @@
 
         private static IForecast[] GetForecast(IEnumerable<Func<IForecast>> forecastSources, Action<Exception> onError = null)
         {
-            return new ForecastApi(forecastSources, onError ?? DoNothing).Get().ToArray();
+            return new ForecastApi(forecastSources, onError ?? DoNothing).GetCurrentConditions().ToArray();
         }
 
         private static void DoNothing<T>(T obj)

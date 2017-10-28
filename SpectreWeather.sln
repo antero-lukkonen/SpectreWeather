@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WunderGround", "WunderGroun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WunderGround.Spec", "WunderGround.Spec\WunderGround.Spec.csproj", "{BDB1E002-64A3-4F3A-9517-9F4427C61C74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpectreWeather.Factory", "SpectreWeather.Factory\SpectreWeather.Factory.csproj", "{45FE825C-B224-4AA3-AADD-9658A18016FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{BDB1E002-64A3-4F3A-9517-9F4427C61C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDB1E002-64A3-4F3A-9517-9F4427C61C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDB1E002-64A3-4F3A-9517-9F4427C61C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45FE825C-B224-4AA3-AADD-9658A18016FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45FE825C-B224-4AA3-AADD-9658A18016FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45FE825C-B224-4AA3-AADD-9658A18016FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45FE825C-B224-4AA3-AADD-9658A18016FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
