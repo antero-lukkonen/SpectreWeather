@@ -25,20 +25,10 @@
 
         public Call Get() => this.Send(HttpMethod.Get, null);
 
-        public Call Put(HttpContent content) => this.Send(HttpMethod.Put, content);
-
-        public Call Post(HttpContent content) => this.Send(HttpMethod.Post, content);
-
 
         public Request Use(params Func<HttpRequestMessage, Func<HttpRequestMessage, Task<HttpResponseMessage>>, Task<HttpResponseMessage>>[] middlewareFuncs)
         {
             Array.ForEach(middlewareFuncs, this.middleware.Add);
-            return this;
-        }
-
-        public Request WithHeader(string key, string value)
-        {
-            this.httpRequest.Headers.Add(key, value);
             return this;
         }
 

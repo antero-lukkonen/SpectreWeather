@@ -1,9 +1,8 @@
-﻿namespace SpectreWeather.ForecastSource.OpenWeatherMap.Spec
+﻿namespace SpectreWeather.ForecastSource.WunderGround.Spec
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using OpenWeatherMap;
     using PublicModel;
     using PublicModel.Spec.Fixtures;
 
@@ -13,9 +12,9 @@
         [TestMethod]
         public void ForecastContainsPressure()
         {
-            var expectedPressure = Unique.Pressure;
+            var expectedPressure = (double)Unique.Pressure;
 
-            var getJson = ToFunc($"{{\"main\":{{\"pressure\":{expectedPressure}}}}}");
+            var getJson = ToFunc($"{{\"pressure_mb\":{expectedPressure}}}");
 
             var forecast = GetForecast(getJson);
 
@@ -27,7 +26,7 @@
         {
             var expectedTemperature = Unique.Temperature;
 
-            var getJson = ToFunc($"{{\"main\":{{\"temp\":{expectedTemperature}}}}}");
+            var getJson = ToFunc($"{{\"temp_f\":{expectedTemperature}}}");
 
             var forecast = GetForecast(getJson);
 
@@ -39,7 +38,7 @@
         {
             var expectedHumidity = Unique.Humidity;
 
-            var getJson = ToFunc($"{{\"main\":{{\"humidity\":{expectedHumidity}}}}}");
+            var getJson = ToFunc($"{{\"relative_humidity\":\"{expectedHumidity}%\"}}");
 
             var forecast = GetForecast(getJson);
 
@@ -49,9 +48,9 @@
         [TestMethod]
         public void ForecastSourceIdentifierIsOpenWeatherMap()
         {
-            var expectedSourceId = "OpenWeatherMap";
+            var expectedSourceId = "WunderGround";
 
-            var getJson = ToFunc($"{{\"main\":{{}}}}");
+            var getJson = ToFunc($"{{}}");
 
             var forecast = GetForecast(getJson);
 

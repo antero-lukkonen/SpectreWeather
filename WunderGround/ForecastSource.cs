@@ -1,4 +1,4 @@
-﻿namespace SpectreWeather.ForecastSource.OpenWeatherMap
+﻿namespace SpectreWeather.ForecastSource.WunderGround
 {
     using System;
     using Newtonsoft.Json;
@@ -12,20 +12,18 @@
             {
                 var schema = new
                 {
-                    main = new
-                    {
-                        pressure = (long)0,
-                        temp = (double)0,
-                        humidity = (long)0
-                    }
+                    pressure_mb = (double)0,
+                    temp_f = (double)0,
+                    relative_humidity = ""                    
                 };
                 var deserialized = JsonConvert.DeserializeAnonymousType(getJson(), schema);
-                var main = deserialized.main;
+                var main = deserialized;
+                var humidity = main.relative_humidity;
                 return new Forecast(
-                    main.pressure, 
-                    new Fahrenheit(main.temp),
-                    main.humidity,
-                    "OpenWeatherMap");
+                    Convert.ToInt64(main.pressure_mb), 
+                    new Fahrenheit(main.temp_f),
+                    long.Parse(humidity?.TrimEnd('%') ?? "0"),
+                    "WunderGround");
             };
         }
 

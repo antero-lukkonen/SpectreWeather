@@ -3,7 +3,8 @@
     public interface IForecast
     {
         long Pressure { get; }
-        double Temperature { get; }
+        Fahrenheit Temperature { get; }
         long Humidity { get; }
+        string SourceId { get; }
     }
 }

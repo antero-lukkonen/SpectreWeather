@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F5E95EA9-09E6-4337-99E4-879BE3922115}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpectreWeather.PublicModel</RootNamespace>
-    <AssemblyName>SpectreWeather.PublicModel</AssemblyName>
+    <ProjectGuid>{5A6C0F4A-443A-4033-B0D1-D0D132DC1248}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SpectreWeather.ConsoleApp</RootNamespace>
+    <AssemblyName>SpectreWeather.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,9 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fahrenheit.cs" />
-    <Compile Include="IForecast.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenWeatherMap\OpenWeatherMap.csproj">
+      <Project>{1abc07d7-e6ee-4d0d-97c9-916649b0ab5b}</Project>
+      <Name>OpenWeatherMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpectreWeather.PublicModel\SpectreWeather.PublicModel.csproj">
+      <Project>{f5e95ea9-09e6-4337-99e4-879be3922115}</Project>
+      <Name>SpectreWeather.PublicModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spectre\SpectreWeather.Api.csproj">
+      <Project>{9f3ca658-8c7c-45da-b3f4-dbd76410ddcb}</Project>
+      <Name>SpectreWeather.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

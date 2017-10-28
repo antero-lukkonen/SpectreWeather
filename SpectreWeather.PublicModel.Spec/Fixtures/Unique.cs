@@ -6,12 +6,20 @@ namespace SpectreWeather.PublicModel.Spec.Fixtures
     public static class Unique
     {
         private static long sequence = new Random(DateTimeOffset.UtcNow.Second).Next(1000, 10000);
+
         private static long Long => Next();
-        private static double Double => Math.Round((double)Next(), 2);
+
+        private static double Double => Math.Round((double)Next() / 10, 2);
+
+        public static string String => Next().ToString();
 
         public static long Pressure => Long;
-        public static double Temperature => Double;
+
+        public static Fahrenheit Temperature => new Fahrenheit(Double);
+
         public static long Humidity => Long;
+
+        public static string SourceId => String;
 
         private static long Next()
         {
