@@ -12,12 +12,14 @@
             {
                 var schema = new
                 {
-                    pressure_mb = (double)0,
-                    temp_f = (double)0,
-                    relative_humidity = ""                    
+                    current_observation = new {
+                        pressure_mb = (double)0,
+                        temp_f = (double)0,
+                        relative_humidity = ""                    
+                    }
                 };
                 var deserialized = JsonConvert.DeserializeAnonymousType(getJson(), schema);
-                var main = deserialized;
+                var main = deserialized.current_observation;
                 var humidity = main.relative_humidity;
                 return new Forecast(
                     Convert.ToInt64(main.pressure_mb), 

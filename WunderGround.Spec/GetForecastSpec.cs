@@ -14,7 +14,7 @@
         {
             var expectedPressure = (double)Unique.Pressure;
 
-            var getJson = ToFunc($"{{\"pressure_mb\":{expectedPressure}}}");
+            var getJson = ToFunc(Wrap($"{{\"pressure_mb\":{expectedPressure}}}"));
 
             var forecast = GetForecast(getJson);
 
@@ -25,20 +25,19 @@
         public void ForecastContainsTemperature()
         {
             var expectedTemperature = Unique.Temperature;
-
-            var getJson = ToFunc($"{{\"temp_f\":{expectedTemperature}}}");
+            var getJson = ToFunc(Wrap($"{{\"temp_f\":{expectedTemperature}}}"));
 
             var forecast = GetForecast(getJson);
 
             Assert.AreEqual(expectedTemperature, forecast.Temperature);
-        }
+        }        
 
         [TestMethod]
         public void ForecastContainsHumidity()
         {
             var expectedHumidity = Unique.Humidity;
 
-            var getJson = ToFunc($"{{\"relative_humidity\":\"{expectedHumidity}%\"}}");
+            var getJson = ToFunc(Wrap($"{{\"relative_humidity\":\"{expectedHumidity}%\"}}"));
 
             var forecast = GetForecast(getJson);
 
@@ -50,7 +49,7 @@
         {
             var expectedSourceId = "WunderGround";
 
-            var getJson = ToFunc($"{{}}");
+            var getJson = ToFunc(Wrap($"{{}}"));
 
             var forecast = GetForecast(getJson);
 
@@ -67,6 +66,11 @@
             var getStringMock = new Mock<Func<string>>();
             getStringMock.Setup(f => f()).Returns(json);
             return getStringMock.Object;
+        }
+
+        private static string Wrap(string content)
+        {
+            return $"{{\"current_observation\":{content}}}";
         }
     }
 }

@@ -65,6 +65,10 @@
       <Project>{9f3ca658-8c7c-45da-b3f4-dbd76410ddcb}</Project>
       <Name>SpectreWeather.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WunderGround\WunderGround.csproj">
+      <Project>{4d6d17df-3516-4393-9e57-4566841c5807}</Project>
+      <Name>WunderGround</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
