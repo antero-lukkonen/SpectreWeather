@@ -15,7 +15,7 @@ namespace SpectreWeather.PublicModel.Spec.Fixtures
 
         public static long Pressure => Long;
 
-        public static Fahrenheit Temperature => new Fahrenheit(Double);
+        public static Kelvin Temperature => new Kelvin(Double);
 
         public static long Humidity => Long;
 

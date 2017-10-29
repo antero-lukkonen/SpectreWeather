@@ -2,11 +2,11 @@ namespace SpectreWeather.PublicModel
 {
     using System.Globalization;
 
-    public struct Fahrenheit
+    public struct Kelvin
     {
         private readonly double value;
 
-        public Fahrenheit(double value)
+        public Kelvin(double value)
         {
             this.value = value;
         }
@@ -21,7 +21,7 @@ namespace SpectreWeather.PublicModel
             return base.Equals(obj);
         }
 
-        public bool Equals(Fahrenheit other)
+        public bool Equals(Kelvin other)
         {
             return this.value.Equals(other.value);
         }

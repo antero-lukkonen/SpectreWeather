@@ -30,7 +30,7 @@
                 var main = deserialized.main;
                 return new CurrentConditions(
                     main.pressure, 
-                    new Fahrenheit(main.temp),
+                    new Kelvin(main.temp),
                     main.humidity,
                     "OpenWeatherMap");
             };

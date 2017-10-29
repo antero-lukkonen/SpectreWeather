@@ -2,7 +2,7 @@
 {
     public class CurrentConditions : ICurrentConditions
     {
-        public CurrentConditions(long pressure, Fahrenheit temperature, long humidity, string sourceId)
+        public CurrentConditions(long pressure, Kelvin temperature, long humidity, string sourceId)
         {
             this.Pressure = pressure;
             this.Temperature = temperature;
@@ -11,7 +11,7 @@
         }
 
         public long Pressure { get; }
-        public Fahrenheit Temperature { get; }
+        public Kelvin Temperature { get; }
         public long Humidity { get; }
         public string SourceId { get; }
     }    

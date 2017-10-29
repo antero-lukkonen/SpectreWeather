@@ -32,7 +32,7 @@
                 var humidity = main.relative_humidity;
                 return new CurrentConditions(
                     Convert.ToInt64(main.pressure_mb), 
-                    new Fahrenheit(main.temp_f),
+                    new Kelvin(main.temp_f),
                     long.Parse(humidity?.TrimEnd('%') ?? "0"),
                     "WunderGround");
             };

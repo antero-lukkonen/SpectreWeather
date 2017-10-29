@@ -3,7 +3,7 @@
     public interface ICurrentConditions
     {
         long Pressure { get; }
-        Fahrenheit Temperature { get; }
+        Kelvin Temperature { get; }
         long Humidity { get; }
         string SourceId { get; }
     }

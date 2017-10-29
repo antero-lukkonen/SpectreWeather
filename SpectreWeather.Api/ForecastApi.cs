@@ -9,9 +9,13 @@ namespace SpectreWeather.Api
     public class ForecastApi
     {
         private readonly IEnumerable<Func<Coordinates, ICurrentConditions>> getForecast;
+        private Func<IEnumerable<ICurrentConditions>, ICurrentConditions> aggregate;
         private readonly Action<Exception> notifyAboutError;
 
-        public ForecastApi(Action<Exception> notifyAboutError, params Func<Coordinates, ICurrentConditions>[] getForecast)
+        public ForecastApi(
+            Action<Exception> notifyAboutError, 
+            Func<IEnumerable<ICurrentConditions>, ICurrentConditions> aggregate,
+            params Func<Coordinates, ICurrentConditions>[] getForecast)
         {
             if (!getForecast.Any())
             {
@@ -19,6 +23,7 @@ namespace SpectreWeather.Api
             }
             this.notifyAboutError = notifyAboutError;
             this.getForecast = getForecast;
+            this.aggregate = aggregate;
         }
 
         public IEnumerable<ICurrentConditions> GetCurrentConditions(Coordinates coordinates)
@@ -42,6 +47,17 @@ namespace SpectreWeather.Api
                 }
                 result.Add(currentConditions);
 
+            }
+            if (result.Count > 1)
+            {
+                try
+                {
+                    result.Add(this.aggregate(result));
+                }
+                catch (Exception e)
+                {
+                    this.notifyAboutError(e);
+                }
             }
             return result;
         }

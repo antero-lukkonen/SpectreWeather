@@ -1,14 +1,15 @@
 namespace SpectreWeather.Api.Spec
 {
     using System;
+    using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PublicModel;
 
     internal static class Asserts
     {
-        public static void MultipleForecastsReturned(ICurrentConditions[] expectedCurrentConditionses, ICurrentConditions[] currentConditions)
+        public static void AllForecastsReturned(ICurrentConditions[] expectedCurrentConditions, ICurrentConditions[] currentConditions)
         {
-            CollectionAssert.AreEquivalent(expectedCurrentConditionses, currentConditions);            
+            Assert.IsTrue(expectedCurrentConditions.All(expectedCurrentConditions.Contains)); 
         }
 
         public static void Exception<T>(Action action, Action<T> assert) where T : Exception
