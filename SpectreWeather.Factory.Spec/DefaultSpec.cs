@@ -23,7 +23,8 @@
         [TestMethod]
         public void Queries2WeatherSourcesAndAddsAggregate()
         {         
-            Assert.AreEqual(3, currentConditions.Count());            
+            Assert.AreEqual(3, currentConditions.Count());
+            Assert.IsNotNull(currentConditions.Single(x => x.SourceId == "AggregateAverage"));
         }
 
         [TestMethod]
