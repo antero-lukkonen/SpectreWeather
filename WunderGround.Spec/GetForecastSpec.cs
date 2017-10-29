@@ -1,6 +1,7 @@
 ﻿namespace SpectreWeather.ForecastSource.WunderGround.Spec
 {
     using System;
+    using System.Globalization;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using PublicModel;
@@ -25,11 +26,12 @@
         public void ForecastContainsTemperature()
         {
             var expectedTemperature = Unique.Temperature;
-            var getJson = ToFunc(Wrap($"{{\"temp_f\":{expectedTemperature}}}"));
+            var tempInCelsius = expectedTemperature.Value / 274.15;
+            var getJson = ToFunc(Wrap($"{{\"temp_c\":{tempInCelsius.ToString(CultureInfo.InvariantCulture)}}}"));
 
             var forecast = GetForecast(getJson);
 
-            Assert.AreEqual(expectedTemperature, forecast.Temperature);
+            Assert.AreEqual(Math.Round(expectedTemperature.Value, 2), Math.Round(forecast.Temperature.Value, 2));
         }        
 
         [TestMethod]

@@ -22,7 +22,7 @@
                 {
                     current_observation = new {
                         pressure_mb = (double)0,
-                        temp_f = (double)0,
+                        temp_c = (double)0,
                         relative_humidity = ""                    
                     }
                 };
@@ -32,7 +32,7 @@
                 var humidity = main.relative_humidity;
                 return new CurrentConditions(
                     Convert.ToInt64(main.pressure_mb), 
-                    new Kelvin(main.temp_f),
+                    new Kelvin(main.temp_c * 274.15),
                     long.Parse(humidity?.TrimEnd('%') ?? "0"),
                     "WunderGround");
             };
