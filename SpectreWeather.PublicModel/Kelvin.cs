@@ -11,6 +11,8 @@ namespace SpectreWeather.PublicModel
             this.value = value;
         }
 
+        public double Value => this.value;
+
         public override string ToString()
         {
             return this.value.ToString(CultureInfo.InvariantCulture);

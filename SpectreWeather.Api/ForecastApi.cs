@@ -52,7 +52,11 @@ namespace SpectreWeather.Api
             {
                 try
                 {
-                    result.Add(this.aggregate(result));
+                    var aggregated = this.aggregate(result);
+                    if (aggregated != null)
+                    {
+                        result.Add(aggregated);
+                    }
                 }
                 catch (Exception e)
                 {

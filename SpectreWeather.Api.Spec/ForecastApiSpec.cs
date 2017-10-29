@@ -129,7 +129,7 @@
             {
                 ToForecastSource(Unique.CurrentConditions),
                 ToForecastSource(Unique.CurrentConditions)
-            });
+            }, DoNothing, x => Unique.CurrentConditions);
 
             Assert.AreEqual(3, actualForecasts.Length);
         }
@@ -193,6 +193,23 @@
             var actualConditions = GetForecast(currentConditions.Select(ToForecastSource),
                 DoNothing,
                 x => throw new Exception());
+
+            Assert.AreEqual(2, actualConditions.Length);
+            Asserts.AllForecastsReturned(currentConditions, actualConditions);
+        }
+
+        [TestMethod]
+        public void DoesNotAddNullAggregation()
+        {
+            var currentConditions = new[]
+            {
+                Unique.CurrentConditions,
+                Unique.CurrentConditions
+            };
+
+            var actualConditions = GetForecast(currentConditions.Select(ToForecastSource),
+                DoNothing,
+                x => null);
 
             Assert.AreEqual(2, actualConditions.Length);
             Asserts.AllForecastsReturned(currentConditions, actualConditions);

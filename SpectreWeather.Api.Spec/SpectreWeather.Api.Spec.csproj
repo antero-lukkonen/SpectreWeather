@@ -55,6 +55,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregateSpec.cs" />
     <Compile Include="Asserts.cs" />
     <Compile Include="Fixtures\Unique.cs" />
     <Compile Include="Mocks\GetForecastMock.cs" />

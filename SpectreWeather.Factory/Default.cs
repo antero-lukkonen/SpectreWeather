@@ -16,7 +16,7 @@
             string HttpGet(Uri uri) => httpClient.GetStringAsync(uri).Result;
 
             var forecastApi = new ForecastApi(notifyOnError,
-                forecasts => null, 
+                Aggregate.Average, 
                 ForecastSource.OpenWeatherMap.Factory.GetCurrentConditions(openWeatherMapKey, HttpGet),
                 ForecastSource.WunderGround.Factory.GetCurrentConditions(wunderGroundKey, HttpGet));
 
