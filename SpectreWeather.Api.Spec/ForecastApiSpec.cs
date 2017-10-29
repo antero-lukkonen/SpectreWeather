@@ -89,7 +89,7 @@
         [TestMethod]
         public void EmptyForecastSourcesAreNotAllowed()
         {
-            var forecastSources = EmptyForecastSources();
+            var forecastSources = Unique.EmptyForecastSources();
             const string expectedMessage = "At least one forecast source is required.";
             var expectedValue = forecastSources;
                         
@@ -99,11 +99,6 @@
                     Assert.IsTrue(e.Message.StartsWith(expectedMessage), $"{e.Message} does not start with {expectedMessage}");
                     CollectionAssert.AreEqual(expectedValue, (ICollection)e.ActualValue);
                 });   
-        }        
-
-        private static Func<Coordinates, ICurrentConditions>[] EmptyForecastSources()
-        {
-            return new Func<Coordinates, ICurrentConditions>[] { };
         }
 
         private static Func<Coordinates, ICurrentConditions> ToForecastSource(ICurrentConditions currentConditions)

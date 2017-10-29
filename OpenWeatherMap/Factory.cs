@@ -8,9 +8,9 @@
     {
         public static Func<Coordinates, ICurrentConditions> GetCurrentConditions(string openWeatherMapKey, Func<Uri, string> HttpGet)
         {
-            var GetOpenWeatherMap = GetClient(HttpGet, openWeatherMapKey);
-            var parseOpenWeatherMap = GetParser();
-            return coordinates => parseOpenWeatherMap(() => GetOpenWeatherMap(coordinates));
+            var getJson = GetClient(HttpGet, openWeatherMapKey);
+            var parse = GetParser();
+            return coordinates => parse(() => getJson(coordinates));
         }
 
         public static Func<Func<string>, ICurrentConditions> GetParser()
@@ -41,22 +41,6 @@
             return c =>
                 httpGet(new Uri(
                     $"http://api.openweathermap.org/data/2.5/weather?lat={c.Lat}&lon={c.Lon}&APPID={openWeatherMapKey}"));
-        }
-
-        public class CurrentConditions : ICurrentConditions
-        {
-            public CurrentConditions(long pressure, Fahrenheit temperature, long humidity, string sourceId)
-            {
-                this.Pressure = pressure;
-                this.Temperature = temperature;
-                this.Humidity = humidity;
-                this.SourceId = sourceId;
-            }
-
-            public long Pressure { get; }
-            public Fahrenheit Temperature { get; }
-            public long Humidity { get; }
-            public string SourceId { get; }
-        }       
+        }  
     }
 }
