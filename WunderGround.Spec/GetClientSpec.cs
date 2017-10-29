@@ -16,7 +16,7 @@ namespace SpectreWeather.ForecastSource.WunderGround.Spec
         {
             var httpGetMock = new Mock<Func<Uri, string>>();
 
-            var func = ForecastSource.GetClient(httpGetMock.Object, Unique.String);
+            var func = Factory.GetClient(httpGetMock.Object, Unique.String);
 
             func(Unique.Coordinates);
 
@@ -73,7 +73,7 @@ namespace SpectreWeather.ForecastSource.WunderGround.Spec
             
             httpGetMock.Setup(f => f(It.IsAny<Uri>())).Returns(expectedResult);
 
-            var func = ForecastSource.GetClient(httpGetMock.Object, Unique.String);
+            var func = Factory.GetClient(httpGetMock.Object, Unique.String);
 
             var result = func(Unique.Coordinates);
 
@@ -84,7 +84,7 @@ namespace SpectreWeather.ForecastSource.WunderGround.Spec
         {
             var httpGetMock = new Mock<Func<Uri, string>>();
 
-            var func = ForecastSource.GetClient(httpGetMock.Object, apiKey);
+            var func = Factory.GetClient(httpGetMock.Object, apiKey);
 
             func(coordinates);
 

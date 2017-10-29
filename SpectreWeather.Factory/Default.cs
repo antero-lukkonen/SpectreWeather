@@ -8,20 +8,16 @@
 
     public static class Default
     {
-        public static Func<Coordinates, IEnumerable<IForecast>> GetCurrentConditions(Action<Exception> notifyOnError)
+        public static Func<Coordinates, IEnumerable<ICurrentConditions>> GetCurrentConditions(Action<Exception> notifyOnError, string openWeatherMapKey, string wunderGroundKey)
         {
             var httpClient = new HttpClient();
             string HttpGet(Uri uri) => httpClient.GetStringAsync(uri).Result;
 
-            var GetOpenWeatherMap = ForecastSource.OpenWeatherMap.ForecastSource.GetClient(HttpGet, "1cea90c6e3f4c93a70d5af7ca4da8419");
-            var GetWunderGround = ForecastSource.WunderGround.ForecastSource.GetClient(HttpGet, "1dd56b419fad8b01");
+            var forecastApi = new ForecastApi(notifyOnError,
+                ForecastSource.OpenWeatherMap.Factory.GetCurrentConditions(openWeatherMapKey, HttpGet),
+                ForecastSource.WunderGround.Factory.GetCurrentConditions(wunderGroundKey, HttpGet));
 
-            return coordinates => new ForecastApi(new[]
-            {
-                ForecastSource.OpenWeatherMap.ForecastSource.Get(() => GetOpenWeatherMap(coordinates)),
-                ForecastSource.WunderGround.ForecastSource.Get(() => GetWunderGround(coordinates))
-            }, notifyOnError)
-            .GetCurrentConditions();
+            return coordinates => forecastApi.GetCurrentConditions(coordinates);
         }
     }
 }

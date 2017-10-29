@@ -5,11 +5,11 @@
     using Newtonsoft.Json;
     using PublicModel;
 
-    public static class ForecastSource
+    public static class Factory
     {             
-        public static Func<IForecast> Get(Func<string> getJson)
+        public static Func<Func<string>, ICurrentConditions> Getparser()
         {
-            return () =>
+            return getJson =>
             {
                 var schema = new
                 {
@@ -23,17 +23,23 @@
                 var deserialized = JsonConvert.DeserializeAnonymousType(value, schema);
                 var main = deserialized.current_observation;
                 var humidity = main.relative_humidity;
-                return new Forecast(
+                return new CurrentConditions(
                     Convert.ToInt64(main.pressure_mb), 
                     new Fahrenheit(main.temp_f),
-                    long.Parse(humidity?.TrimEnd('%') ?? "0"),
+                    Int64.Parse(humidity?.TrimEnd('%') ?? "0"),
                     "WunderGround");
             };
         }
 
-        public class Forecast : IForecast
+        public static Func<Coordinates, string> GetClient(Func<Uri, string> get, string wunderGroundKey)
         {
-            public Forecast(long pressure, Fahrenheit temperature, long humidity, string sourceId)
+            return c =>
+                get(new Uri($"http://api.wunderground.com/api/{wunderGroundKey}/conditions/q/{c.Lat.ToString(CultureInfo.InvariantCulture)},{c.Lon.ToString(CultureInfo.InvariantCulture)}.json"));
+        }
+
+        public class CurrentConditions : ICurrentConditions
+        {
+            public CurrentConditions(long pressure, Fahrenheit temperature, long humidity, string sourceId)
             {
                 this.Pressure = pressure;
                 this.Temperature = temperature;
@@ -47,10 +53,11 @@
             public string SourceId { get; }
         }
 
-        public static Func<Coordinates, string> GetClient(Func<Uri, string> get, string wunderGroundKey)
+        public static Func<Coordinates, ICurrentConditions> GetCurrentConditions(string wunderGroundKey, Func<Uri, string> HttpGet)
         {
-            return c => 
-                get(new Uri($"http://api.wunderground.com/api/{wunderGroundKey}/conditions/q/{c.Lat.ToString(CultureInfo.InvariantCulture)},{c.Lon.ToString(CultureInfo.InvariantCulture)}.json"));
+            var GetWunderGround = GetClient(HttpGet, wunderGroundKey);
+            var parseWunderGround = Getparser();
+            return coordinates => parseWunderGround(() => GetWunderGround(coordinates));
         }
     }
 }

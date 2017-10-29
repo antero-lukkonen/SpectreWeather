@@ -1,6 +1,6 @@
 ﻿namespace SpectreWeather.PublicModel
 {
-    public interface IForecast
+    public interface ICurrentConditions
     {
         long Pressure { get; }
         Fahrenheit Temperature { get; }

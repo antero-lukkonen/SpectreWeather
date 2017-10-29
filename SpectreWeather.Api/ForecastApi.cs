@@ -8,10 +8,10 @@ namespace SpectreWeather.Api
 
     public class ForecastApi
     {
-        private readonly IEnumerable<Func<IForecast>> getForecast;
+        private readonly IEnumerable<Func<Coordinates, ICurrentConditions>> getForecast;
         private readonly Action<Exception> notifyAboutError;
 
-        public ForecastApi(IEnumerable<Func<IForecast>> getForecast, Action<Exception> notifyAboutError)
+        public ForecastApi(Action<Exception> notifyAboutError, params Func<Coordinates, ICurrentConditions>[] getForecast)
         {
             if (!getForecast.Any())
             {
@@ -21,26 +21,26 @@ namespace SpectreWeather.Api
             this.getForecast = getForecast;
         }
 
-        public IEnumerable<IForecast> GetCurrentConditions()
+        public IEnumerable<ICurrentConditions> GetCurrentConditions(Coordinates coordinates)
         {
-            var result = new List<IForecast>();
+            var result = new List<ICurrentConditions>();
             foreach (var func in this.getForecast)
             {
-                IForecast forecast = null;
+                ICurrentConditions currentConditions = null;
                 try
                 {
-                    forecast = func();
+                    currentConditions = func(coordinates);
                 }
                 catch (Exception e)
                 {
                     this.notifyAboutError(e);
                 }
 
-                if (forecast == null)
+                if (currentConditions == null)
                 {
                     continue;
                 }
-                result.Add(forecast);
+                result.Add(currentConditions);
 
             }
             return result;

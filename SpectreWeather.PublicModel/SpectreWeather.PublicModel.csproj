@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Coordinates.cs" />
     <Compile Include="Fahrenheit.cs" />
-    <Compile Include="IForecast.cs" />
+    <Compile Include="ICurrentConditions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

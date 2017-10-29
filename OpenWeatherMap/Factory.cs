@@ -4,11 +4,18 @@
     using Newtonsoft.Json;
     using PublicModel;
 
-    public static class ForecastSource
-    {             
-        public static Func<IForecast> Get(Func<string> getJson)
+    public static class Factory
+    {
+        public static Func<Coordinates, ICurrentConditions> GetCurrentConditions(string openWeatherMapKey, Func<Uri, string> HttpGet)
         {
-            return () =>
+            var GetOpenWeatherMap = GetClient(HttpGet, openWeatherMapKey);
+            var parseOpenWeatherMap = GetParser();
+            return coordinates => parseOpenWeatherMap(() => GetOpenWeatherMap(coordinates));
+        }
+
+        public static Func<Func<string>, ICurrentConditions> GetParser()
+        {
+            return getJson =>
             {
                 var schema = new
                 {
@@ -21,7 +28,7 @@
                 };
                 var deserialized = JsonConvert.DeserializeAnonymousType(getJson(), schema);
                 var main = deserialized.main;
-                return new Forecast(
+                return new CurrentConditions(
                     main.pressure, 
                     new Fahrenheit(main.temp),
                     main.humidity,
@@ -29,9 +36,16 @@
             };
         }
 
-        public class Forecast : IForecast
+        public static Func<Coordinates, string> GetClient(Func<Uri, string> httpGet, string openWeatherMapKey)
         {
-            public Forecast(long pressure, Fahrenheit temperature, long humidity, string sourceId)
+            return c =>
+                httpGet(new Uri(
+                    $"http://api.openweathermap.org/data/2.5/weather?lat={c.Lat}&lon={c.Lon}&APPID={openWeatherMapKey}"));
+        }
+
+        public class CurrentConditions : ICurrentConditions
+        {
+            public CurrentConditions(long pressure, Fahrenheit temperature, long humidity, string sourceId)
             {
                 this.Pressure = pressure;
                 this.Temperature = temperature;
@@ -43,13 +57,6 @@
             public Fahrenheit Temperature { get; }
             public long Humidity { get; }
             public string SourceId { get; }
-        }
-
-        public static Func<Coordinates, string> GetClient(Func<Uri, string> httpGet, string openWeatherMapKey)
-        {
-            return c =>
-                httpGet(new Uri(
-                    $"http://api.openweathermap.org/data/2.5/weather?lat={c.Lat}&lon={c.Lon}&APPID={openWeatherMapKey}"));
-        }
+        }       
     }
 }

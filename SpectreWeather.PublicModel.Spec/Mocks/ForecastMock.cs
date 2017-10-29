@@ -2,7 +2,7 @@
 {
     using Moq;
 
-    public class ForecastMock : Mock<IForecast>
+    public class ForecastMock : Mock<ICurrentConditions>
     {
     }
     

@@ -1,6 +1,7 @@
 ﻿namespace SpectreWeather.Api.Spec
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using Api;
@@ -13,6 +14,8 @@
     [TestClass]
     public class ForecastApiSpec
     {
+        private static readonly Coordinates coordinates = Unique.Coordinates;
+
         [TestMethod]
         public void FiltersOutNullForecasts()
         {   
@@ -26,7 +29,7 @@
         {
             var expectedForecasts = new[]
             {
-                Unique.Forecast
+                Unique.CurrentConditions
             };
 
             var forecastSources = expectedForecasts
@@ -57,7 +60,7 @@
         {
             var expectedForecasts = new[]
             {
-                Unique.Forecast
+                Unique.CurrentConditions
             };
 
             var forecastSources = expectedForecasts.Select(ToForecastSource);
@@ -72,8 +75,8 @@
         {
             var expectedForecasts = new[]
             {
-                Unique.Forecast,
-                Unique.Forecast
+                Unique.CurrentConditions,
+                Unique.CurrentConditions
             };
 
             var forecastSources = expectedForecasts.Select(ToForecastSource);
@@ -94,28 +97,28 @@
                 () => GetForecast(forecastSources), 
                 e => {
                     Assert.IsTrue(e.Message.StartsWith(expectedMessage), $"{e.Message} does not start with {expectedMessage}");
-                    Assert.AreEqual(expectedValue, e.ActualValue);
+                    CollectionAssert.AreEqual(expectedValue, (ICollection)e.ActualValue);
                 });   
         }        
 
-        private static Func<IForecast>[] EmptyForecastSources()
+        private static Func<Coordinates, ICurrentConditions>[] EmptyForecastSources()
         {
-            return new Func<IForecast>[] { };
+            return new Func<Coordinates, ICurrentConditions>[] { };
         }
 
-        private static Func<IForecast> ToForecastSource(IForecast forecast)
+        private static Func<Coordinates, ICurrentConditions> ToForecastSource(ICurrentConditions currentConditions)
         {
-            return new GetForecastMock().SetupForecast(forecast).Object;
+            return new GetForecastMock().SetupForecast(currentConditions).Object;
         }
 
-        private static Func<IForecast> GetFailingSource(Exception exception)
+        private static Func<Coordinates, ICurrentConditions> GetFailingSource(Exception exception)
         {
             return new GetForecastMock().SetupThrows(exception).Object;
         }
 
-        private static IForecast[] GetForecast(IEnumerable<Func<IForecast>> forecastSources, Action<Exception> onError = null)
+        private static ICurrentConditions[] GetForecast(IEnumerable<Func<Coordinates, ICurrentConditions>> forecastSources, Action<Exception> onError = null)
         {
-            return new ForecastApi(forecastSources, onError ?? DoNothing).GetCurrentConditions().ToArray();
+            return new ForecastApi(onError ?? DoNothing, forecastSources.ToArray()).GetCurrentConditions(coordinates).ToArray();
         }
 
         private static void DoNothing<T>(T obj)

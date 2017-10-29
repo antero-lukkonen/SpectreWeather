@@ -5,6 +5,7 @@ namespace SpectreWeather.Api.Spec.Fixtures
 
     internal static class Unique
     {
-        public static IForecast Forecast => new ForecastMock().Object;
+        public static ICurrentConditions CurrentConditions => new ForecastMock().Object;
+        public static Coordinates Coordinates => PublicModel.Spec.Fixtures.Unique.Coordinates;
     }
 }

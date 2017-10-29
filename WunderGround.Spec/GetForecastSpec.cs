@@ -56,9 +56,9 @@
             Assert.AreEqual(expectedSourceId, forecast.SourceId);
         }
 
-        private static IForecast GetForecast(Func<string> getJson)
+        private static ICurrentConditions GetForecast(Func<string> getJson)
         {
-            return ForecastSource.Get(getJson)();
+            return Factory.Getparser()(getJson);
         }
 
         private static Func<string> ToFunc(string json)
